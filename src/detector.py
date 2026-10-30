@@ -238,7 +238,9 @@ class PlateDetector:
                 class_name = ""
                 if result.names and box.cls is not None:
                     class_idx = int(box.cls[0])
-                    class_name = result.names.get(class_idx, "")
+                    raw_name = result.names.get(class_idx, "")
+                    # Some HuggingFace models store names as "['plate']" — clean that
+                    class_name = str(raw_name).strip("[]'\" ").split(",")[0].strip().lower() or "license_plate"
 
                 plates.append(
                     PlateDetection(

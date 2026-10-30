@@ -194,7 +194,7 @@ def bgr_to_display_bytes(bgr: np.ndarray, fmt: str = "JPEG") -> bytes:
 
 def display_bgr_image(bgr: np.ndarray, caption: str = "") -> None:
     rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
-    st.image(rgb, caption=caption, use_container_width=True)
+    st.image(rgb, caption=caption, width='stretch')
 
 
 # ---------------------------------------------------------------------------
@@ -392,7 +392,7 @@ def page_recognition() -> None:
     col_orig, col_info = st.columns([2, 1])
     with col_orig:
         st.markdown("**Uploaded Image**")
-        st.image(image_bytes, use_container_width=True)
+        st.image(image_bytes, width='stretch')
     with col_info:
         size_kb = len(image_bytes) / 1024
         try:
@@ -504,7 +504,7 @@ def _display_result(result: PipelineResult, original_bytes: bytes) -> None:
     tabs = st.tabs(["Original", "Plate Crop", "Annotated Output"])
 
     with tabs[0]:
-        st.image(original_bytes, caption="Uploaded Image", use_container_width=True)
+        st.image(original_bytes, caption="Uploaded Image", width='stretch')
 
     with tabs[1]:
         if result.plate_crop is not None:
@@ -530,7 +530,7 @@ def _display_result(result: PipelineResult, original_bytes: bytes) -> None:
                 data=annotated_bytes,
                 file_name=f"annotated_{result.filename}",
                 mime="image/jpeg",
-                use_container_width=True,
+                width='stretch',
             )
 
     with dl_col2:
@@ -540,7 +540,7 @@ def _display_result(result: PipelineResult, original_bytes: bytes) -> None:
                 data=report_to_json_bytes(result.report),
                 file_name=f"report_{result.filename}.json",
                 mime="application/json",
-                use_container_width=True,
+                width='stretch',
             )
 
     with dl_col3:
@@ -550,7 +550,7 @@ def _display_result(result: PipelineResult, original_bytes: bytes) -> None:
                 data=report_to_csv_bytes(result.report),
                 file_name=f"report_{result.filename}.csv",
                 mime="text/csv",
-                use_container_width=True,
+                width='stretch',
             )
 
     # Validation detail
